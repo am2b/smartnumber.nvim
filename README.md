@@ -10,9 +10,7 @@ Automatically toggles Neovim line numbers between relative and absolute based on
 - Handles **window focus** changes inside Neovim and in external multiplexer like **tmux**
 - Keeps absolute line numbers in unfocused windows
 
-## 🔧 Installation
-
-Using [lazy.nvim](https://github.com/folke/lazy.nvim):
+## 📦 Installation (using [lazy.nvim](https://github.com/folke/lazy.nvim))
 
 ```lua
 {
