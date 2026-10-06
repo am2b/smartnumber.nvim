@@ -91,6 +91,18 @@ function M.setup(opts)
         end,
     })
 
+    --切换buffer后做最终校正(关键修复):
+    --新建窗口并挂载新buffer(:vsplit/:split/:sbuffer/浮窗等)时, WinEnter 触发时机
+    --早于 buffer 挂载, 回调里 vim.bo/curbuf 仍指向旧buffer, buftype守卫可能错误
+    --跳过, 导致新窗口的 relativenumber 没有被恢复(表现为"切到某buffer后相对行号消失")。
+    --BufEnter 触发时 curbuf/curwin 已就绪, 在此补一次校正。
+    vim.api.nvim_create_autocmd("BufEnter", {
+        group = group,
+        callback = function()
+            set_relative_number(not in_insert)
+        end,
+    })
+
     --当前窗口获得焦点(tmux分屏)
     vim.api.nvim_create_autocmd("FocusGained", {
         group = group,
